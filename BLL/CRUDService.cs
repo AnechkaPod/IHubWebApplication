@@ -39,5 +39,6 @@ namespace IHubWebApplication.BLL
         {
             _repository.Update(ent);
         }
+
     }
 }

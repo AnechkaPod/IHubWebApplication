@@ -32,7 +32,6 @@ namespace IHubWebApplication.Controllers
   
         }
 
-
         [HttpGet]
         [Route("GetMainMenus")]
         [EnableCors("AllowSpecificOrigin")]
@@ -40,9 +39,7 @@ namespace IHubWebApplication.Controllers
         {
             List<Screen> list = _service.GetAll().Where(x=>x.ScreenParentId == null).ToList();
             return Ok(list);
-
         }
-
 
         [HttpGet]
         [Route("GetSubMenus")]
@@ -52,7 +49,6 @@ namespace IHubWebApplication.Controllers
         {
             List<Screen> list = _service.GetAll().Where(x => x.ScreenParentId == id).ToList();
             return Ok(list);
-
         }
     }
 }

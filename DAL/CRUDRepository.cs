@@ -1,6 +1,11 @@
 ﻿using IHubWebApplication.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
+using System.Dynamic;
 using System.Reflection;
 
 namespace IHubWebApplication.DAL
@@ -18,8 +23,22 @@ namespace IHubWebApplication.DAL
 
         internal List<TEntity> GetAll()
         {
-           
+            //var navigationProperties = typeof(TEntity).GetProperties()
+            //.Where(p => IsNavigationProperty(p.PropertyType));
+
+            //IQueryable<TEntity> query = _dbSet;
+            //foreach (var property in navigationProperties)
+            //{
+            //    query = query.Include(property.Name);
+            //}
+
+
             return _dbSet.ToList();
+        }
+        private static bool IsNavigationProperty(Type type)
+        {
+            return typeof(IEnumerable<object>).IsAssignableFrom(type)
+                || typeof(object).IsAssignableFrom(type);
         }
 
         internal void Add(TEntity entity)
@@ -34,34 +53,12 @@ namespace IHubWebApplication.DAL
             _dbContext.SaveChanges();
         }
 
-        //internal bool Delete<TKey>(TKey id)
-        //{
-        //    try
-        //    {
-        //        var entity = _dbSet.Find(id);
-        //        if (entity == null)
-        //        {
-        //            // If the entity with the specified ID is not found, return false.
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            _dbSet.Remove(entity);
-        //            _dbContext.SaveChanges();
 
-        //            return true; // Deletion was successful.
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //}
         internal bool Delete<TKey>(TKey id)
         {
             try
             {
-               
+
                 var entity = _dbSet.Find(id);
                 if (entity == null)
                 {
@@ -82,4 +79,5 @@ namespace IHubWebApplication.DAL
             }
         }
     }
+
 }

@@ -3,6 +3,7 @@ using IHubWebApplication.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using static System.Net.WebRequestMethods;
@@ -26,7 +27,7 @@ namespace IHubWebApplication.Controllers
         [HttpGet]
         //[Route("GetAll")]
         [EnableCors("AllowSpecificOrigin")]
-        public Response GetAllMaps([FromQuery] string filter)
+        public Response GetAll([FromQuery] string filter)
         {
             List<Map> list = _service.GetAll().Where(x=>x.TableName == filter).ToList();
 
@@ -55,6 +56,5 @@ namespace IHubWebApplication.Controllers
 
             return response;
         }
-
     }
 }

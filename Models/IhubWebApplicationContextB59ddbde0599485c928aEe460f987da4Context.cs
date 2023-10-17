@@ -21,11 +21,15 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
 
     public virtual DbSet<HgdrNech> HgdrNeches { get; set; }
 
+    public virtual DbSet<HgdrTatAfik> HgdrTatAfiks { get; set; }
+
     public virtual DbSet<Map> Maps { get; set; }
 
     public virtual DbSet<Movie> Movies { get; set; }
 
     public virtual DbSet<Person> People { get; set; }
+
+    public virtual DbSet<Screen> Screens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -99,6 +103,21 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
                 .HasColumnName("Neches_Misgeret_Mishtana");
         });
 
+        modelBuilder.Entity<HgdrTatAfik>(entity =>
+        {
+            entity.ToTable("Hgdr_Tat_Afik");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Afik).HasMaxLength(50);
+            entity.Property(e => e.KodAfik).HasColumnName("Kod_Afik");
+            entity.Property(e => e.KodHieTatAfik1).HasColumnName("Kod_Hie_TatAfik_1");
+            entity.Property(e => e.KodTatAfik).HasColumnName("Kod_Tat_Afik");
+            entity.Property(e => e.NetrulMvtk).HasColumnName("Netrul_Mvtk");
+            entity.Property(e => e.TeurTatAfik)
+                .HasMaxLength(50)
+                .HasColumnName("Teur_Tat_Afik");
+        });
+
         modelBuilder.Entity<Map>(entity =>
         {
             entity.HasKey(e => new { e.Field, e.TableName });
@@ -129,6 +148,28 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Screen>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("Screen");
+
+            entity.Property(e => e.ColumnsUrl)
+                .HasMaxLength(50)
+                .HasColumnName("ColumnsURL");
+            entity.Property(e => e.ComboDisplayField)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
+            entity.Property(e => e.RowsUrl)
+                .HasMaxLength(50)
+                .HasColumnName("RowsURL");
+            entity.Property(e => e.ScreenName).HasMaxLength(50);
+            entity.Property(e => e.ScreenParentId).HasColumnName("ScreenParentID");
         });
 
         OnModelCreatingPartial(modelBuilder);

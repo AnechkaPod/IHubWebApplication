@@ -9,9 +9,9 @@ using static System.Net.WebRequestMethods;
 
 namespace IHubWebApplication.Controllers
 {
-    public class BankController : CRUDController<HgdrBank>
+    public class SapakController : CRUDController<HgdrSapak>
     {
-        public BankController(CRUDService<HgdrBank> service) : base(service)
+        public SapakController(CRUDService<HgdrSapak> service) : base(service)
         {
         }
     }

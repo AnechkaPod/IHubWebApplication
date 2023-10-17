@@ -17,9 +17,25 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
 
     public virtual DbSet<HgdrBank> HgdrBanks { get; set; }
 
+    public virtual DbSet<HgdrCheshbon> HgdrCheshbons { get; set; }
+
     public virtual DbSet<HgdrMatbea> HgdrMatbeas { get; set; }
 
+    public virtual DbSet<HgdrMetafel> HgdrMetafels { get; set; }
+
+    public virtual DbSet<HgdrMutzar> HgdrMutzars { get; set; }
+
+    public virtual DbSet<HgdrMutzarCategory> HgdrMutzarCategories { get; set; }
+
     public virtual DbSet<HgdrNech> HgdrNeches { get; set; }
+
+    public virtual DbSet<HgdrSapak> HgdrSapaks { get; set; }
+
+    public virtual DbSet<HgdrSugCheshbon> HgdrSugCheshbons { get; set; }
+
+    public virtual DbSet<HgdrSugMutzar> HgdrSugMutzars { get; set; }
+
+    public virtual DbSet<HgdrTatAfik> HgdrTatAfiks { get; set; }
 
     public virtual DbSet<Map> Maps { get; set; }
 
@@ -28,6 +44,8 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
     public virtual DbSet<Person> People { get; set; }
 
     public virtual DbSet<Screen> Screens { get; set; }
+
+    public virtual DbSet<Setting> Settings { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -50,6 +68,21 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
             entity.Property(e => e.TeurChaverBursaPoalim)
                 .HasMaxLength(50)
                 .HasColumnName("Teur_Chaver_Bursa_Poalim");
+        });
+
+        modelBuilder.Entity<HgdrCheshbon>(entity =>
+        {
+            entity.ToTable("Hgdr_Cheshbon");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.KodBank).HasColumnName("Kod_Bank");
+            entity.Property(e => e.KodCheshbon)
+                .HasMaxLength(50)
+                .HasColumnName("Kod_Cheshbon");
+            entity.Property(e => e.SugCheshbon).HasColumnName("Sug_Cheshbon");
+            entity.Property(e => e.TeurCheshbon)
+                .HasMaxLength(100)
+                .HasColumnName("Teur_Cheshbon");
         });
 
         modelBuilder.Entity<HgdrMatbea>(entity =>
@@ -77,6 +110,56 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
                 .HasColumnName("UnderlyingRIC");
         });
 
+        modelBuilder.Entity<HgdrMetafel>(entity =>
+        {
+            entity.ToTable("Hgdr_Metafel");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.Metafel).HasMaxLength(50);
+            entity.Property(e => e.Path).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<HgdrMutzar>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Hgdr_Mutzar_1");
+
+            entity.ToTable("Hgdr_Mutzar");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.KodMutzarCategory).HasColumnName("Kod_Mutzar_Category");
+            entity.Property(e => e.KodSugMutzar).HasColumnName("Kod_Sug_Mutzar");
+
+            entity.HasOne(d => d.KodMutzarCategoryNavigation).WithMany(p => p.HgdrMutzars)
+                .HasForeignKey(d => d.KodMutzarCategory)
+                .HasConstraintName("FK_Hgdr_Mutzar_Hgdr_MutzarCategory");
+
+            entity.HasOne(d => d.KodSugMutzarNavigation).WithMany(p => p.HgdrMutzars)
+                .HasForeignKey(d => d.KodSugMutzar)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Hgdr_Mutzar_Hgdr_Sug_Mutzar");
+        });
+
+        modelBuilder.Entity<HgdrMutzarCategory>(entity =>
+        {
+            entity.ToTable("Hgdr_MutzarCategory");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.KodSugMutzar).HasColumnName("Kod_Sug_Mutzar");
+            entity.Property(e => e.RafTsuaYomit)
+                .HasColumnType("decimal(3, 2)")
+                .HasColumnName("Raf_Tsua_Yomit");
+            entity.Property(e => e.TeurCtegory)
+                .HasMaxLength(50)
+                .HasColumnName("Teur_Ctegory");
+
+            entity.HasOne(d => d.KodSugMutzarNavigation).WithMany(p => p.HgdrMutzarCategories)
+                .HasForeignKey(d => d.KodSugMutzar)
+                .HasConstraintName("FK_Hgdr_MutzarCategory_Hgdr_Sug_Mutzar");
+        });
+
         modelBuilder.Entity<HgdrNech>(entity =>
         {
             entity.ToTable("Hgdr_Neches");
@@ -101,6 +184,56 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
                 .HasColumnName("Neches_Misgeret_Mishtana");
         });
 
+        modelBuilder.Entity<HgdrSapak>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Hgdr_Mutzar");
+
+            entity.ToTable("Hgdr_Sapak");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.SugSherut)
+                .HasMaxLength(50)
+                .HasColumnName("Sug_Sherut");
+            entity.Property(e => e.TeurSapak)
+                .HasMaxLength(50)
+                .HasColumnName("Teur_Sapak");
+        });
+
+        modelBuilder.Entity<HgdrSugCheshbon>(entity =>
+        {
+            entity.ToTable("Hgdr_Sug_Cheshbon");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.SunCheshbon)
+                .HasMaxLength(50)
+                .HasColumnName("Sun_Cheshbon");
+        });
+
+        modelBuilder.Entity<HgdrSugMutzar>(entity =>
+        {
+            entity.ToTable("Hgdr_Sug_Mutzar");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.SugMutzar)
+                .HasMaxLength(50)
+                .HasColumnName("Sug_Mutzar");
+        });
+
+        modelBuilder.Entity<HgdrTatAfik>(entity =>
+        {
+            entity.ToTable("Hgdr_Tat_Afik");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Afik).HasMaxLength(50);
+            entity.Property(e => e.KodAfik).HasColumnName("Kod_Afik");
+            entity.Property(e => e.KodHieTatAfik1).HasColumnName("Kod_Hie_TatAfik_1");
+            entity.Property(e => e.KodTatAfik).HasColumnName("Kod_Tat_Afik");
+            entity.Property(e => e.NetrulMvtk).HasColumnName("Netrul_Mvtk");
+            entity.Property(e => e.TeurTatAfik)
+                .HasMaxLength(50)
+                .HasColumnName("Teur_Tat_Afik");
+        });
+
         modelBuilder.Entity<Map>(entity =>
         {
             entity.HasKey(e => new { e.Field, e.TableName });
@@ -111,6 +244,7 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
             entity.Property(e => e.TableName).HasMaxLength(50);
             entity.Property(e => e.HeaderName).HasMaxLength(50);
             entity.Property(e => e.Type).HasMaxLength(50);
+            entity.Property(e => e.ValueOptionsUrl).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Movie>(entity =>
@@ -140,10 +274,10 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
                 .ToTable("Screen");
 
             entity.Property(e => e.ColumnsUrl)
-                .HasMaxLength(50)
+                .HasMaxLength(150)
                 .HasColumnName("ColumnsURL");
             entity.Property(e => e.ComboDisplayField)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsFixedLength();
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -153,6 +287,16 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
                 .HasColumnName("RowsURL");
             entity.Property(e => e.ScreenName).HasMaxLength(50);
             entity.Property(e => e.ScreenParentId).HasColumnName("ScreenParentID");
+        });
+
+        modelBuilder.Entity<Setting>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.Url)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("URL");
         });
 
         OnModelCreatingPartial(modelBuilder);

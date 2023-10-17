@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 namespace IHubWebApplication.Model;
 
-public partial class Map
+public partial class OptionsForSelect
 {
     public string Field { get; set; } = null!;
 
-    public string? HeaderName { get; set; }
+    public string ValuesTable { get; set; } = null!;
 
-    public string? Type { get; set; }
+    public int Id { get; set; }
 
     public string TableName { get; set; } = null!;
 
-    public int? SortKey { get; set; }
-
-    public string? ValueOptionsUrl { get; set; }
+    public virtual Map Map { get; set; } = null!;
 }

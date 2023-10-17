@@ -1,40 +1,36 @@
 ﻿using IHubWebApplication.BLL;
 using IHubWebApplication.Model;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using static System.Net.WebRequestMethods;
 
 namespace IHubWebApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MatbeaController : ControllerBase
-
-    //https://www.youtube.com/watch?v=CouLqTfr9Y8&ab_channel=ManojKumar
+    public abstract class CRUDController<TEntity> : ControllerBase where TEntity : class
     {
-        private readonly CRUDService<HgdrMatbea> _service;
+        private readonly CRUDService<TEntity> _service;
 
         private readonly IConfiguration _configuration;
-        public MatbeaController(CRUDService<HgdrMatbea> service)
+        public CRUDController(CRUDService<TEntity> service)
         {
             _service = service;
         }
+
 
         [HttpGet]
         //[Route("GetAll")]
         [EnableCors("AllowSpecificOrigin")]
         public ActionResult GetAll()
         {
-            List<HgdrMatbea> list = _service.GetAll();
-            return Ok(list);
+            List<TEntity> list = _service.GetAll();
+             return Ok(list);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult Update(int id, [FromBody] HgdrMatbea updatedMatbea)
+        public ActionResult Update(int id, [FromBody] TEntity updatedMatbea)
         {
             _service.Update(updatedMatbea);
             return NoContent();
@@ -42,7 +38,7 @@ namespace IHubWebApplication.Controllers
 
         [HttpPost]
         //[Route("AddMatbea")]
-        public ActionResult Add([FromBody] HgdrMatbea matbea)
+        public ActionResult Add([FromBody] TEntity matbea)
         {
             _service.Add(matbea);
             return Ok(matbea);
@@ -55,5 +51,6 @@ namespace IHubWebApplication.Controllers
             _service.Delete<int>(id);
             return NoContent();
         }
+
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 /*
 !!!DO NOT DELETE THIS LINE!!!
 //run clean
-dotnet ef dbcontext scaffold "Server=DESKTOP-6KCUQP6\SQLEXPRESS;Database=IHubWebApplicationContext-b59ddbde-0599-485c-928a-ee460f987da4;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force
+dotnet ef dbcontext scaffold "Server=DESKTOP-6KCUQP6\SQLEXPRESS;Database=IHubWebApplicationContext-b59ddbde-0599-485c-928a-ee460f987da4;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Model --force
 
 !!!DO NOT DELETE THIS LINE!!!
 */
@@ -40,17 +40,14 @@ builder.Services.AddCors(options =>
         });
 });
 
-//builder.Services.AddScoped<HgdrMatbeasService>();
-//builder.Services.AddScoped<HgdrMatbeasRepository>();
-//builder.Services.AddScoped<MapService>();
-//builder.Services.AddScoped<MapRepository>();
-//builder.Services.AddScoped(typeof(Repository<HgdrMatbea>));
-//builder.Services.AddScoped(typeof(Service<HgdrMatbea>));
-//builder.Services.AddScoped(typeof(Repository<Map>));
-//builder.Services.AddScoped(typeof(Service<Map>));
 builder.Services.AddScoped(typeof(CRUDService<>));
 builder.Services.AddScoped(typeof(CRUDRepository<>));
-//builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+//this is for MainControllerAttempt that doesnt work yet
+//builder.Services.AddScoped(typeof(CRUDService<HgdrTatAfik>));
+//builder.Services.AddScoped(typeof(CRUDRepository<HgdrTatAfik>));
+//////////////////////////////////////////////////////////////////////////////
+
 var app = builder.Build();
 
 // Configure CORS before other middleware
