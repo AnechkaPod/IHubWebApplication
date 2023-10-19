@@ -30,18 +30,18 @@ namespace IHubWebApplication.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult Update(int id, [FromBody] TEntity updatedMatbea)
+        public ActionResult Update(int id, [FromBody] TEntity ent)
         {
-            _service.Update(updatedMatbea);
+            _service.Update(ent);
             return NoContent();
         }
 
         [HttpPost]
         //[Route("AddMatbea")]
-        public ActionResult Add([FromBody] TEntity matbea)
+        public ActionResult Add([FromBody] TEntity ent)
         {
-            _service.Add(matbea);
-            return Ok(matbea);
+            _service.Add(ent);
+            return Ok(ent);
         }
 
         [HttpDelete]

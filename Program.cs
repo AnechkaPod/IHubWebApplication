@@ -1,10 +1,12 @@
 using IHubWebApplication;
 using IHubWebApplication.BLL;
 using IHubWebApplication.DAL;
+using IHubWebApplication.JsonConverters;
 using IHubWebApplication.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using System.Text.Json.Serialization;
 
 /*
 !!!DO NOT DELETE THIS LINE!!!
@@ -17,7 +19,14 @@ dotnet ef dbcontext scaffold "Server=DESKTOP-6KCUQP6\SQLEXPRESS;Database=IHubWeb
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    //options.JsonSerializerOptions.Converters.Add(new NavigationPropertyIgnoreConverter<T>());
+
+    options.JsonSerializerOptions.Converters.Add(new HgdrMutzarConverter());
+});
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -43,10 +52,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped(typeof(CRUDService<>));
 builder.Services.AddScoped(typeof(CRUDRepository<>));
 
-//this is for MainControllerAttempt that doesnt work yet
-//builder.Services.AddScoped(typeof(CRUDService<HgdrTatAfik>));
-//builder.Services.AddScoped(typeof(CRUDRepository<HgdrTatAfik>));
-//////////////////////////////////////////////////////////////////////////////
+
+
+builder.Services.AddScoped(typeof(MutzarService));
+builder.Services.AddScoped(typeof(MutzarRepository));
 
 var app = builder.Build();
 

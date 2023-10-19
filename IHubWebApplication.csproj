@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Models\**" />
+    <Compile Remove="Model\Metadata\**" />
     <Content Remove="Models\**" />
+    <Content Remove="Model\Metadata\**" />
     <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Model\Metadata\**" />
     <None Remove="Models\**" />
+    <None Remove="Model\Metadata\**" />
   </ItemGroup>
 
   <ItemGroup>

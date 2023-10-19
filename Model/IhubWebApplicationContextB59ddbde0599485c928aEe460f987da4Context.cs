@@ -243,6 +243,7 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
             entity.Property(e => e.Field).HasMaxLength(50);
             entity.Property(e => e.TableName).HasMaxLength(50);
             entity.Property(e => e.HeaderName).HasMaxLength(50);
+            entity.Property(e => e.OptionsPropertyToDisplay).HasMaxLength(50);
             entity.Property(e => e.Type).HasMaxLength(50);
             entity.Property(e => e.ValueOptionsUrl).HasMaxLength(50);
         });

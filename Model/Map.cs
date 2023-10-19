@@ -16,4 +16,6 @@ public partial class Map
     public int? SortKey { get; set; }
 
     public string? ValueOptionsUrl { get; set; }
+
+    public string? OptionsPropertyToDisplay { get; set; }
 }
