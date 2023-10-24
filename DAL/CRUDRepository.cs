@@ -53,12 +53,10 @@ namespace IHubWebApplication.DAL
             _dbContext.SaveChanges();
         }
 
-
         internal bool Delete<TKey>(TKey id)
         {
             try
             {
-
                 var entity = _dbSet.Find(id);
                 if (entity == null)
                 {

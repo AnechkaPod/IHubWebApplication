@@ -151,9 +151,9 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
             entity.Property(e => e.RafTsuaYomit)
                 .HasColumnType("decimal(3, 2)")
                 .HasColumnName("Raf_Tsua_Yomit");
-            entity.Property(e => e.TeurCtegory)
+            entity.Property(e => e.TeurCategory)
                 .HasMaxLength(50)
-                .HasColumnName("Teur_Ctegory");
+                .HasColumnName("Teur_Category");
 
             entity.HasOne(d => d.KodSugMutzarNavigation).WithMany(p => p.HgdrMutzarCategories)
                 .HasForeignKey(d => d.KodSugMutzar)
@@ -242,6 +242,7 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
 
             entity.Property(e => e.Field).HasMaxLength(50);
             entity.Property(e => e.TableName).HasMaxLength(50);
+            entity.Property(e => e.FilteringProps).HasMaxLength(50);
             entity.Property(e => e.HeaderName).HasMaxLength(50);
             entity.Property(e => e.OptionsPropertyToDisplay).HasMaxLength(50);
             entity.Property(e => e.Type).HasMaxLength(50);

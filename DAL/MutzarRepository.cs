@@ -13,20 +13,50 @@ namespace IHubWebApplication.DAL
             _dbSet = _dbContext.Set<HgdrMutzar>();
         }
 
+
         internal List<HgdrMutzar> GetAll()
         {
-           return  _dbSet.ToList();
-            //        var entities = _dbContext.HgdrMutzars
-            //.Select(x => new HgdrMutzar
-            //{
-            //    Id = x.Id,
-            //    Mutzar = x.Mutzar,
-            //    KodSugMutzarNavigation = x.KodSugMutzarNavigation // Include the referenced entity
-            //})
-            //.ToList();
+         
+            return _dbSet.Include(x=>x.KodSugMutzarNavigation)
+                .Include(x => x.KodMutzarCategoryNavigation)
+                .ToList();
+        }
 
-            //        return entities;
-            //_dbSet.Include(x=>x.KodSugMutzarNavigation).ToList();
+        internal void Update(HgdrMutzar ent)
+        {
+            _dbSet.Update(ent);
+            _dbContext.SaveChanges();
+        }
+
+
+        internal void Add(HgdrMutzar entity)
+        {
+            _dbSet.Add(entity);
+            _dbContext.SaveChanges();
+        }
+
+        internal bool Delete(int id)
+        {
+            try
+            {
+                var entity = _dbSet.Find(id);
+                if (entity == null)
+                {
+                    // If the entity with the specified ID is not found, return false.
+                    return false;
+                }
+                else
+                {
+                    _dbSet.Remove(entity);
+                    _dbContext.SaveChanges();
+
+                    return true; // Deletion was successful.
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

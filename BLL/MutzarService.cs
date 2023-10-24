@@ -11,9 +11,26 @@ namespace IHubWebApplication.BLL
         {
             _repository = repository;
         }
+
+        internal void Add(HgdrMutzar ent)
+        {
+            _repository.Add(ent);
+        }
+
+        internal bool Delete(int id)
+        {
+            return _repository.Delete(id);
+        }
+
+
         internal List<HgdrMutzar> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        internal void Update(HgdrMutzar ent)
+        {
+            _repository.Update(ent);
         }
     }
 }

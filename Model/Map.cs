@@ -18,4 +18,6 @@ public partial class Map
     public string? ValueOptionsUrl { get; set; }
 
     public string? OptionsPropertyToDisplay { get; set; }
+
+    public string? FilteringProps { get; set; }
 }

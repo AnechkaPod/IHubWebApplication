@@ -10,7 +10,7 @@ namespace IHubWebApplication.Controllers
     [ApiController]
     public abstract class CRUDController<TEntity> : ControllerBase where TEntity : class
     {
-        private readonly CRUDService<TEntity> _service;
+        protected readonly CRUDService<TEntity> _service;
 
         private readonly IConfiguration _configuration;
         public CRUDController(CRUDService<TEntity> service)
@@ -18,6 +18,8 @@ namespace IHubWebApplication.Controllers
             _service = service;
         }
 
+
+     
 
         [HttpGet]
         //[Route("GetAll")]

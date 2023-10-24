@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace IHubWebApplication.Model;
 
@@ -23,6 +22,4 @@ public partial class HgdrMatbea
     public int Id { get; set; }
 
     public string? Source { get; set; }
-
-
 }
