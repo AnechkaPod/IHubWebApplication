@@ -55,9 +55,11 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
     {
         modelBuilder.Entity<HgdrBank>(entity =>
         {
+            entity.HasKey(e => e.KodBank);
+
             entity.ToTable("Hgdr_Bank");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.KodBank).HasColumnName("Kod_Bank");
             entity.Property(e => e.Bank).HasMaxLength(50);
             entity.Property(e => e.CounterPartyName)
                 .HasMaxLength(50)
@@ -122,13 +124,13 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
 
         modelBuilder.Entity<HgdrMutzar>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Hgdr_Mutzar_1");
+            entity.HasKey(e => e.KodMutzar).HasName("PK_Hgdr_Mutzar_1");
 
             entity.ToTable("Hgdr_Mutzar");
 
-            entity.Property(e => e.Id)
+            entity.Property(e => e.KodMutzar)
                 .ValueGeneratedNever()
-                .HasColumnName("ID");
+                .HasColumnName("Kod_Mutzar");
             entity.Property(e => e.KodMutzarCategory).HasColumnName("Kod_Mutzar_Category");
             entity.Property(e => e.KodSugMutzar).HasColumnName("Kod_Sug_Mutzar");
 
@@ -244,6 +246,8 @@ public partial class IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Co
             entity.Property(e => e.TableName).HasMaxLength(50);
             entity.Property(e => e.FilteringProps).HasMaxLength(50);
             entity.Property(e => e.HeaderName).HasMaxLength(50);
+            entity.Property(e => e.IsPrimaryKey).HasColumnName("isPrimaryKey");
+            entity.Property(e => e.OptionsPrimaryKey).HasMaxLength(50);
             entity.Property(e => e.OptionsPropertyToDisplay).HasMaxLength(50);
             entity.Property(e => e.Type).HasMaxLength(50);
             entity.Property(e => e.ValueOptionsUrl).HasMaxLength(50);

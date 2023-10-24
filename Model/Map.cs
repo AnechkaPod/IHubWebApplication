@@ -20,4 +20,8 @@ public partial class Map
     public string? OptionsPropertyToDisplay { get; set; }
 
     public string? FilteringProps { get; set; }
+
+    public bool? IsPrimaryKey { get; set; }
+
+    public string? OptionsPrimaryKey { get; set; }
 }
