@@ -24,6 +24,20 @@ namespace IHubWebApplication.DAL
 
         internal void Update(HgdrMutzar ent)
         {
+            //HgdrMutzar mutzarToUpdte = _dbSet.Find(ent.KodMutzar);
+            //mutzarToUpdte.Mutzar = ent.Mutzar;
+
+            DbSet<HgdrSugMutzar> dbset = _dbContext.Set<HgdrSugMutzar>();
+            HgdrSugMutzar hgdrSugMutzar = dbset.ToList().FirstOrDefault(x => x.Id == ent.KodSugMutzar);
+
+            ent.KodSugMutzarNavigation = hgdrSugMutzar;
+
+            if (ent.KodMutzarCategory.HasValue)
+            {
+                DbSet<HgdrMutzarCategory> dbsetHgdrMutzarCategory = _dbContext.Set<HgdrMutzarCategory>();
+                HgdrMutzarCategory hgdrMutzarCategory = dbsetHgdrMutzarCategory.ToList().FirstOrDefault(x => x.Id == ent.KodMutzarCategory.Value);
+                ent.KodMutzarCategoryNavigation = hgdrMutzarCategory;
+            }
             _dbSet.Update(ent);
             _dbContext.SaveChanges();
         }

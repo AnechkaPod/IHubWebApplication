@@ -6,6 +6,7 @@ using IHubWebApplication.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 /*
@@ -18,10 +19,13 @@ dotnet ef dbcontext scaffold "Server=DESKTOP-6KCUQP6\SQLEXPRESS;Database=IHubWeb
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(options =>
+
 {
     options.JsonSerializerOptions.Converters.Add(new HgdrMutzarConverter());
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
 });
 
 

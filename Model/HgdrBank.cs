@@ -5,7 +5,7 @@ namespace IHubWebApplication.Model;
 
 public partial class HgdrBank
 {
-    public short KodBank { get; set; }
+    public int KodBank { get; set; }
 
     public string Bank { get; set; } = null!;
 
