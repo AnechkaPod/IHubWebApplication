@@ -57,7 +57,25 @@ namespace IHubWebApplication.DAL
         {
             try
             {
-                var entity = _dbSet.Find(id);
+                TEntity entity = null; 
+                try
+                {
+
+                    entity = _dbSet.Find(id);
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        entity = _dbSet.Find(short.Parse(id.ToString()));
+                    }
+                    catch 
+                    {
+                        entity = _dbSet.Find(byte.Parse(id.ToString()));
+                    }
+                    
+                }
+
                 if (entity == null)
                 {
                     // If the entity with the specified ID is not found, return false.

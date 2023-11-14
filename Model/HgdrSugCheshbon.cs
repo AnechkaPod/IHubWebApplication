@@ -5,7 +5,9 @@ namespace IHubWebApplication.Model;
 
 public partial class HgdrSugCheshbon
 {
-    public int Id { get; set; }
+    public short Id { get; set; }
 
-    public string? SunCheshbon { get; set; }
+    public string? SugCheshbon { get; set; }
+
+    public virtual ICollection<HgdrCheshbon> HgdrCheshbons { get; set; } = new List<HgdrCheshbon>();
 }

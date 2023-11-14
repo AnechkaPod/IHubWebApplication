@@ -16,7 +16,6 @@ namespace IHubWebApplication.DAL
 
         internal List<HgdrMutzar> GetAll()
         {
-         
             return _dbSet.Include(x=>x.KodSugMutzarNavigation)
                 .Include(x => x.KodMutzarCategoryNavigation)
                 .ToList();
@@ -43,10 +42,21 @@ namespace IHubWebApplication.DAL
         }
 
 
-        internal void Add(HgdrMutzar entity)
+        internal HgdrMutzar Add(HgdrMutzar entity)
         {
+            DbSet<HgdrSugMutzar> dbset = _dbContext.Set<HgdrSugMutzar>();
+            HgdrSugMutzar hgdrSugMutzar = dbset.ToList().FirstOrDefault(x => x.Id == entity.KodSugMutzar);
+            entity.KodSugMutzarNavigation = hgdrSugMutzar;
+            if (entity.KodMutzarCategory.HasValue)
+            {
+                DbSet<HgdrMutzarCategory> dbsetHgdrMutzarCategory = _dbContext.Set<HgdrMutzarCategory>();
+                HgdrMutzarCategory hgdrMutzarCategory = dbsetHgdrMutzarCategory.ToList().FirstOrDefault(x => x.Id == entity.KodMutzarCategory.Value);
+                entity.KodMutzarCategoryNavigation = hgdrMutzarCategory;
+            }
+
             _dbSet.Add(entity);
             _dbContext.SaveChanges();
+            return entity;
         }
 
         internal bool Delete(int id)

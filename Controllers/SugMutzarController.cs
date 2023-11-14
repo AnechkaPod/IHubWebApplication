@@ -8,10 +8,10 @@ using System.Data.SqlClient;
 using static System.Net.WebRequestMethods;
 
 namespace IHubWebApplication.Controllers
-{
-    public class SugHeshbonController : CRUDController<HgdrSugCheshbon>
+{ 
+    public class SugMutzarController : CRUDController<HgdrSugMutzar>
     {
-        public SugHeshbonController(CRUDService<HgdrSugCheshbon> service) : base(service)
+        public SugMutzarController(CRUDService<HgdrSugMutzar> service) : base(service)
         {
         }
     }

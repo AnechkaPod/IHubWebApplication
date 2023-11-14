@@ -12,9 +12,9 @@ namespace IHubWebApplication.BLL
             _repository = repository;
         }
 
-        internal void Add(HgdrMutzar ent)
+        internal HgdrMutzar Add(HgdrMutzar ent)
         {
-            _repository.Add(ent);
+           return _repository.Add(ent);
         }
 
         internal bool Delete(int id)

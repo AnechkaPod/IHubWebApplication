@@ -24,4 +24,6 @@ public partial class Map
     public bool? IsPrimaryKey { get; set; }
 
     public string? OptionsPrimaryKey { get; set; }
+
+    public bool? Identity { get; set; }
 }

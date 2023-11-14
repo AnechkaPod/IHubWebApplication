@@ -5,7 +5,7 @@ namespace IHubWebApplication.Model;
 
 public partial class HgdrMutzar
 {
-    public int KodMutzar { get; set; }
+    public int Id { get; set; }
 
     public string Mutzar { get; set; } = null!;
 

@@ -13,15 +13,15 @@ public partial class HgdrNech
 
     public int? CheshbonYaadDefault { get; set; }
 
-    public short? KodMachsir { get; set; }
+    public short? KodMachshir { get; set; }
 
     public short? KodMatbea { get; set; }
 
-    public bool? CancelOrderExport { get; set; }
+    public bool? CanelOrder { get; set; }
 
-    public string? NechesMisgeretMishtana { get; set; }
+    public virtual HgdrCheshbon? CheshbonYaadDefaultNavigation { get; set; }
 
-    public string? NechesMisgeretKvua { get; set; }
+    public virtual HgdrMachshir? KodMachshirNavigation { get; set; }
 
-    public int? KodTatAfik { get; set; }
+    public virtual HgdrMatbea? KodMatbeaNavigation { get; set; }
 }

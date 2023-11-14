@@ -13,7 +13,7 @@ using System.Text.Json.Serialization;
 !!!DO NOT DELETE THIS LINE!!!
 //run clean
 dotnet ef dbcontext scaffold "Server=DESKTOP-6KCUQP6\SQLEXPRESS;Database=IHubWebApplicationContext-b59ddbde-0599-485c-928a-ee460f987da4;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Model --force
-
+dotnet ef dbcontext scaffold "Server=DESKTOP-6KCUQP6\SQLEXPRESS;Database=YourDatabase;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Model --force --table YourTableName
 !!!DO NOT DELETE THIS LINE!!!
 */
 
@@ -24,6 +24,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddJsonOptions(options =>
 
 {
+   // options.JsonSerializerOptions.Converters.Add(new HgdrHeshbonConverter());
     options.JsonSerializerOptions.Converters.Add(new HgdrMutzarConverter());
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
 });
@@ -54,6 +55,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped(typeof(CRUDService<>));
 builder.Services.AddScoped(typeof(CRUDRepository<>));
 
+
+builder.Services.AddScoped(typeof(HeshbonService));
+builder.Services.AddScoped(typeof(HeshbonRepository));
 
 
 builder.Services.AddScoped(typeof(MutzarService));

@@ -19,7 +19,9 @@ public partial class HgdrMatbea
 
     public decimal? PriceMultiplier { get; set; }
 
-    public int Id { get; set; }
+    public short Id { get; set; }
 
     public string? Source { get; set; }
+
+    public virtual ICollection<HgdrNech> HgdrNeches { get; set; } = new List<HgdrNech>();
 }
