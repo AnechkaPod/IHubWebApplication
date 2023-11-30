@@ -12,4 +12,6 @@ public partial class HgdrMetafel
     public string? Email { get; set; }
 
     public string? Path { get; set; }
+
+    public virtual ICollection<HgdrMutzar> HgdrMutzars { get; set; } = new List<HgdrMutzar>();
 }

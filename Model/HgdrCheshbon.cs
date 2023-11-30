@@ -47,7 +47,11 @@ public partial class HgdrCheshbon
 
     public string? SortCode { get; set; }
 
+    public int? KodMutzar { get; set; }
+
     public virtual ICollection<HgdrMachshir> HgdrMachshirs { get; set; } = new List<HgdrMachshir>();
+
+    public virtual ICollection<HgdrMutzar> HgdrMutzars { get; set; } = new List<HgdrMutzar>();
 
     public virtual ICollection<HgdrNech> HgdrNeches { get; set; } = new List<HgdrNech>();
 

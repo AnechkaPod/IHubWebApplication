@@ -73,7 +73,6 @@ namespace IHubWebApplication.DAL
                     {
                         entity = _dbSet.Find(byte.Parse(id.ToString()));
                     }
-                    
                 }
 
                 if (entity == null)

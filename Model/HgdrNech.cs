@@ -19,9 +19,27 @@ public partial class HgdrNech
 
     public bool? CanelOrder { get; set; }
 
+    public string? NechesMisgeretMishtana { get; set; }
+
+    public string? NechesMisgeretKvua { get; set; }
+
+    public int? KodMedinatChasifa { get; set; }
+
+    public int? KodMedinaNischeret { get; set; }
+
+    public short? KodMachshirNb { get; set; }
+
+    public int? KodTatAfIk { get; set; }
+
+    public string? KodBasisHatzmada { get; set; }
+
+    public virtual ICollection<BtzTnuot> BtzTnuots { get; set; } = new List<BtzTnuot>();
+
     public virtual HgdrCheshbon? CheshbonYaadDefaultNavigation { get; set; }
 
     public virtual HgdrMachshir? KodMachshirNavigation { get; set; }
 
     public virtual HgdrMatbea? KodMatbeaNavigation { get; set; }
+
+    public virtual ICollection<TnutTnuot> TnutTnuots { get; set; } = new List<TnutTnuot>();
 }

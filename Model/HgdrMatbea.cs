@@ -21,7 +21,7 @@ public partial class HgdrMatbea
 
     public short Id { get; set; }
 
-    public string? Source { get; set; }
-
     public virtual ICollection<HgdrNech> HgdrNeches { get; set; } = new List<HgdrNech>();
+
+    public virtual ICollection<TnutTnuot> TnutTnuots { get; set; } = new List<TnutTnuot>();
 }

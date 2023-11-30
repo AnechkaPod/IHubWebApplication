@@ -6,6 +6,8 @@ using IHubWebApplication.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -27,8 +29,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
    // options.JsonSerializerOptions.Converters.Add(new HgdrHeshbonConverter());
     options.JsonSerializerOptions.Converters.Add(new HgdrMutzarConverter());
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
-});
 
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

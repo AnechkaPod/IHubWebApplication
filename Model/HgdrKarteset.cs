@@ -3,13 +3,15 @@ using System.Collections.Generic;
 
 namespace IHubWebApplication.Model;
 
-public partial class HgdrSapak
+public partial class HgdrKarteset
 {
     public int Id { get; set; }
 
-    public string TeurSapak { get; set; } = null!;
+    public int KodKarteset { get; set; }
 
-    public string? SugSherut { get; set; }
+    public string TeurKarteset { get; set; } = null!;
+
+    public int DanelKodPratim { get; set; }
 
     public virtual ICollection<TnutTnuot> TnutTnuots { get; set; } = new List<TnutTnuot>();
 }

@@ -37,6 +37,7 @@ namespace IHubWebApplication.Controllers
         [EnableCors("AllowSpecificOrigin")]
         public ActionResult GetMainMenus()
         {
+            var var = _service.GetAll();
             List<Screen> list = _service.GetAll().Where(x=>x.ScreenParentId == null).ToList();
             return Ok(list);
         }
