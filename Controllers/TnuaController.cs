@@ -1,5 +1,5 @@
 ﻿using IHubWebApplication.BLL;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +9,9 @@ using static System.Net.WebRequestMethods;
 
 namespace IHubWebApplication.Controllers
 {
-    public class TnuaController : CRUDController<HgdrTnua>
+    public class TnuaController : CRUDController<HgdrTnuot>
     {
-        public TnuaController(CRUDService<HgdrTnua> service) : base(service)
+        public TnuaController(CRUDService<HgdrTnuot> service) : base(service)
         {
         }
     }

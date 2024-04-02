@@ -1,5 +1,5 @@
 ﻿using IHubWebApplication.DAL;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 
 namespace IHubWebApplication.BLL
 {

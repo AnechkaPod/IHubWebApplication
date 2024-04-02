@@ -1,4 +1,4 @@
-﻿using IHubWebApplication.Model;
+﻿using IHubWebApplication.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -12,27 +12,35 @@ namespace IHubWebApplication.DAL
 {
     public class CRUDRepository<TEntity> where TEntity : class
     {
-        private readonly IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Context _dbContext;
+        private readonly InvestHubContext _dbContext;
         private readonly DbSet<TEntity> _dbSet;
+        string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", $"log-{DateTime.Now:yyyy-MM-dd}.txt");
+        string logsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
 
-        public CRUDRepository(IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Context dbContext)
+        public CRUDRepository(InvestHubContext dbContext)
         {
+            if (!Directory.Exists(logsDirectory))
+            {
+                Directory.CreateDirectory(logsDirectory);
+            }
+
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<TEntity>();
         }
 
         internal List<TEntity> GetAll()
         {
-            //var navigationProperties = typeof(TEntity).GetProperties()
-            //.Where(p => IsNavigationProperty(p.PropertyType));
 
-            //IQueryable<TEntity> query = _dbSet;
-            //foreach (var property in navigationProperties)
-            //{
-            //    query = query.Include(property.Name);
-            //}
+            using (StreamWriter writer = new StreamWriter(logFilePath, true))
+            {
+                if (_dbSet != null)
+                    writer.WriteLine("CRUDRepository in get all : _dbSet is" + _dbSet);
+                if (_dbContext != null)
+                    writer.WriteLine("CRUDRepository in get all : _dbContext is" + _dbContext);
 
+                // You can write more log messages here...
 
+            }
             return _dbSet.ToList();
         }
         private static bool IsNavigationProperty(Type type)
@@ -57,7 +65,7 @@ namespace IHubWebApplication.DAL
         {
             try
             {
-                TEntity entity = null; 
+                TEntity entity = null;
                 try
                 {
 
@@ -69,7 +77,7 @@ namespace IHubWebApplication.DAL
                     {
                         entity = _dbSet.Find(short.Parse(id.ToString()));
                     }
-                    catch 
+                    catch
                     {
                         entity = _dbSet.Find(byte.Parse(id.ToString()));
                     }

@@ -1,13 +1,14 @@
-﻿using IHubWebApplication.Model;
+﻿
+using IHubWebApplication.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace IHubWebApplication.DAL
 {
     public class HeshbonRepository
     {
-        private readonly IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Context _dbContext;
+        private readonly InvestHubContext _dbContext;
         private readonly DbSet<HgdrCheshbon> _dbSet;
-        public HeshbonRepository(IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Context dbContext)
+        public HeshbonRepository(InvestHubContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<HgdrCheshbon>();

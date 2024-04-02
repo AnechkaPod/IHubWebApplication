@@ -1,5 +1,5 @@
 ﻿using IHubWebApplication.BLL;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 
 namespace IHubWebApplication.Controllers
 {

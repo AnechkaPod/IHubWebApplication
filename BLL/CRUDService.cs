@@ -1,5 +1,5 @@
 ﻿using IHubWebApplication.DAL;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace IHubWebApplication.BLL
@@ -7,9 +7,15 @@ namespace IHubWebApplication.BLL
     public class CRUDService<TEntity> where TEntity : class
     {
         private readonly CRUDRepository<TEntity> _repository;
+        string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", $"log-{DateTime.Now:yyyy-MM-dd}.txt");
+        string logsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
 
         public CRUDService(CRUDRepository<TEntity> repository)
         {
+            if (!Directory.Exists(logsDirectory))
+            {
+                Directory.CreateDirectory(logsDirectory);
+            }
             _repository = repository;
         }
 
@@ -21,6 +27,14 @@ namespace IHubWebApplication.BLL
             }
             catch (Exception ex)
             {
+                if (!Directory.Exists(logsDirectory))
+                {
+                    Directory.CreateDirectory(logsDirectory);
+                }
+                using (StreamWriter writer = new StreamWriter(logFilePath, true))
+                {
+                    writer.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - This is a log message: " + ex.Message);
+                }
                 return null;
             }
         }

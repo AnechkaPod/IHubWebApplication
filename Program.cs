@@ -2,7 +2,7 @@ using IHubWebApplication;
 using IHubWebApplication.BLL;
 using IHubWebApplication.DAL;
 using IHubWebApplication.JsonConverters;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -10,24 +10,40 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
+using Microsoft.AspNetCore.Authentication.Negotiate;
 /*
 !!!DO NOT DELETE THIS LINE!!!
 //run clean
+dotnet ef dbcontext scaffold "Server=localhost\SQLEXPRESS01;Database=Invest_Hub;Integrated Security=true;TrustServerCertificate=true" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models --force --table TableName1 --table TableName2
+
+dotnet ef dbcontext scaffold "Server=localhost\SQLEXPRESS01;Database=Invest_Hub;Integrated Security=true;TrustServerCertificate=true" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models --force
 dotnet ef dbcontext scaffold "Server=DESKTOP-6KCUQP6\SQLEXPRESS;Database=IHubWebApplicationContext-b59ddbde-0599-485c-928a-ee460f987da4;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Model --force
 dotnet ef dbcontext scaffold "Server=DESKTOP-6KCUQP6\SQLEXPRESS;Database=YourDatabase;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Model --force --table YourTableName
 !!!DO NOT DELETE THIS LINE!!!
 */
+string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", $"log-{DateTime.Now:yyyy-MM-dd}.txt");
+string logsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
+if (!Directory.Exists(logsDirectory))
+{
+    Directory.CreateDirectory(logsDirectory);
+}
+using (StreamWriter writer = new StreamWriter(logFilePath, true))
+{
+    writer.WriteLine("connection string is: " + configuration.GetConnectionString("CrudConnection"));
+}
 
 // Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(options =>
 
 {
-   // options.JsonSerializerOptions.Converters.Add(new HgdrHeshbonConverter());
-    options.JsonSerializerOptions.Converters.Add(new HgdrMutzarConverter());
+  //  options.JsonSerializerOptions.Converters.Add(new HgdrMutzarConverter());
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
 
 });
@@ -36,18 +52,30 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<IhubWebApplicationContextB59ddbde0599485c928aEe460f987da4Context>(options =>
+// Retrieve connection string from appsettings.json
+var connectionString = configuration.GetConnectionString("CrudConnection");
+
+
+
+
+builder.Services.AddDbContext<InvestHubContext>(options =>
 {
-    options.UseSqlServer("Server=DESKTOP-6KCUQP6\\SQLEXPRESS;Database=IHubWebApplicationContext-b59ddbde-0599-485c-928a-ee460f987da4;Integrated Security=true;Encrypt=False");
+    options.UseSqlServer(connectionString);
 });
 
+var allowedOrigin = configuration.GetValue<string>("Cors:AllowedOrigin");
+
+using (StreamWriter writer = new StreamWriter(logFilePath, true))
+{
+    writer.WriteLine("Cors AllowedOrigin " + configuration.GetConnectionString("CrudConnection"));
+}
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost:3000")
+            builder.WithOrigins(allowedOrigin)
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowCredentials(); // Allow credentials (cookies, authorization headers, etc.)
@@ -65,6 +93,8 @@ builder.Services.AddScoped(typeof(HeshbonRepository));
 builder.Services.AddScoped(typeof(MutzarService));
 builder.Services.AddScoped(typeof(MutzarRepository));
 
+
+builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // Configure CORS before other middleware
@@ -80,6 +110,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
 app.UseAuthorization();
 app.MapControllers();
 

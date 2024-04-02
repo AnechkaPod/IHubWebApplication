@@ -1,10 +1,11 @@
 ﻿using IHubWebApplication.BLL;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Security.Principal;
 using static System.Net.WebRequestMethods;
 
 namespace IHubWebApplication.Controllers
@@ -27,6 +28,8 @@ namespace IHubWebApplication.Controllers
         [EnableCors("AllowSpecificOrigin")]
         public ActionResult GetAll()
         {
+            string username1 = HttpContext.User.Identity.Name;
+            string username = User.Identity.Name;
             List<Screen> list = _service.GetAll();
             return Ok(list);
   

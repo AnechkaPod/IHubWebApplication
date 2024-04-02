@@ -18,4 +18,8 @@ public partial class Screen
     public string? ColumnsUrl { get; set; }
 
     public string? ComboDisplayField { get; set; }
+
+    public bool IsDataEntry { get; set; }
+
+    public int? DefaultScreenId { get; set; }
 }

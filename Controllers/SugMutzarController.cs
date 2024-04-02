@@ -1,5 +1,5 @@
 ﻿using IHubWebApplication.BLL;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

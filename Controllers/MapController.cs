@@ -1,5 +1,5 @@
 ﻿using IHubWebApplication.BLL;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +16,10 @@ namespace IHubWebApplication.Controllers
 
         //https://www.youtube.com/watch?v=CouLqTfr9Y8&ab_channel=ManojKumar
     {
-        private readonly CRUDService<Map> _service;
+        private readonly CRUDService<Mapping> _service;
 
         private readonly IConfiguration _configuration;
-        public MapController(CRUDService<Map> service)
+        public MapController(CRUDService<Mapping> service)
         {
             _service = service;
         }
@@ -29,7 +29,7 @@ namespace IHubWebApplication.Controllers
         [EnableCors("AllowSpecificOrigin")]
         public Response GetAll([FromQuery] string filter)
         {
-            List<Map> list = _service.GetAll().Where(x=>x.TableName == filter).ToList();
+            List<Mapping> list = _service.GetAll().Where(x=>x.TableName == filter).ToList();
 
             Response response = new Response();
             if (list != null)

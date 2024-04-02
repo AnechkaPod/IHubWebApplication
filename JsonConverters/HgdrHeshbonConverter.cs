@@ -1,4 +1,4 @@
-﻿using IHubWebApplication.Model;
+﻿using IHubWebApplication.Models;
 using Microsoft.Extensions.Options;
 using System.Numerics;
 using System.Text.Json;

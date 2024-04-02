@@ -5,13 +5,13 @@ namespace IHubWebApplication.Models;
 
 public partial class Map
 {
-    public string Field { get; set; } = null!;
+    public string? XlsName { get; set; }
 
-    public string? HeaderName { get; set; }
+    public string? Column { get; set; }
 
-    public string? Type { get; set; }
+    public int MapId { get; set; }
 
-    public string TableName { get; set; } = null!;
+    public int? MappingProfileId { get; set; }
 
-    public int? SortKey { get; set; }
+    public virtual MappingProfile? MappingProfile { get; set; }
 }

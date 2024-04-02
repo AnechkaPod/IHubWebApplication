@@ -1,4 +1,10 @@
+using Azure;
+using IHubWebApplication.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
 
 namespace IHubWebApplication.Controllers
 {
@@ -19,15 +25,17 @@ namespace IHubWebApplication.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public Models.Response GetAll()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var principal = HttpContext.User;
+            _logger.LogInformation("Principal: {0}", principal.Identity.Name);
+            var windowsIdentity = principal?.Identity as WindowsIdentity;
+
+            Models.Response response = new Models.Response();
+            response.StatusCode = 200;
+            response.StatusMessage = "OK";
+            response.ObjectsList = Summaries.ToList<object>();
+            return response;
         }
     }
 }

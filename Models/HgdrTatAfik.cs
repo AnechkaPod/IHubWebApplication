@@ -11,6 +11,8 @@ public partial class HgdrTatAfik
 
     public string TeurTatAfik { get; set; } = null!;
 
+    public string? TatAfikRama2 { get; set; }
+
     public string? Afik { get; set; }
 
     public int? KodAfik { get; set; }
@@ -18,4 +20,6 @@ public partial class HgdrTatAfik
     public bool? NetrulMvtk { get; set; }
 
     public int? KodHieTatAfik1 { get; set; }
+
+    public virtual HgdrHieTatAfik? KodHieTatAfik1Navigation { get; set; }
 }
