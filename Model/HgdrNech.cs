@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace IHubWebApplication.Model;
 
@@ -33,6 +34,7 @@ public partial class HgdrNech
 
     public string? KodBasisHatzmada { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<BtzTnuot> BtzTnuots { get; set; } = new List<BtzTnuot>();
 
     public virtual HgdrCheshbon? CheshbonYaadDefaultNavigation { get; set; }
@@ -41,5 +43,6 @@ public partial class HgdrNech
 
     public virtual HgdrMatbea? KodMatbeaNavigation { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<TnutTnuot> TnutTnuots { get; set; } = new List<TnutTnuot>();
 }
