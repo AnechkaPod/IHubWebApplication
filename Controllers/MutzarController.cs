@@ -14,6 +14,8 @@ namespace IHubWebApplication.Controllers
     public class MutzarController : ControllerBase
     {
         private readonly MutzarService _service;
+        private readonly ILogger<MutzarController> _logger;
+
 
         private readonly IConfiguration _configuration;
         public MutzarController(MutzarService service)
@@ -37,6 +39,7 @@ namespace IHubWebApplication.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 // Handle exceptions if needed
                 return BadRequest("An error occurred: " + ex.Message);
             }

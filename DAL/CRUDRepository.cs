@@ -1,4 +1,5 @@
-﻿using IHubWebApplication.Models;
+﻿using IHubWebApplication.Controllers;
+using IHubWebApplication.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -14,33 +15,16 @@ namespace IHubWebApplication.DAL
     {
         private readonly InvestHubContext _dbContext;
         private readonly DbSet<TEntity> _dbSet;
-        string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", $"log-{DateTime.Now:yyyy-MM-dd}.txt");
-        string logsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
-
-        public CRUDRepository(InvestHubContext dbContext)
+        private readonly ILogger<CRUDRepository<TEntity>> _logger;
+        public CRUDRepository(ILogger<CRUDRepository<TEntity>> logger , InvestHubContext dbContext)
         {
-            if (!Directory.Exists(logsDirectory))
-            {
-                Directory.CreateDirectory(logsDirectory);
-            }
-
-            _dbContext = dbContext;
+            _logger = logger;
+             _dbContext = dbContext;
             _dbSet = _dbContext.Set<TEntity>();
         }
 
         internal List<TEntity> GetAll()
         {
-
-            using (StreamWriter writer = new StreamWriter(logFilePath, true))
-            {
-                if (_dbSet != null)
-                    writer.WriteLine("CRUDRepository in get all : _dbSet is" + _dbSet);
-                if (_dbContext != null)
-                    writer.WriteLine("CRUDRepository in get all : _dbContext is" + _dbContext);
-
-                // You can write more log messages here...
-
-            }
             return _dbSet.ToList();
         }
         private static bool IsNavigationProperty(Type type)
@@ -73,6 +57,7 @@ namespace IHubWebApplication.DAL
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex.Message);
                     try
                     {
                         entity = _dbSet.Find(short.Parse(id.ToString()));
@@ -98,6 +83,7 @@ namespace IHubWebApplication.DAL
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return false;
             }
         }

@@ -1,21 +1,18 @@
-﻿using IHubWebApplication.DAL;
+﻿using IHubWebApplication.Controllers;
+using IHubWebApplication.DAL;
 using IHubWebApplication.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace IHubWebApplication.BLL
 {
     public class CRUDService<TEntity> where TEntity : class
     {
         private readonly CRUDRepository<TEntity> _repository;
-        string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", $"log-{DateTime.Now:yyyy-MM-dd}.txt");
-        string logsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
-
-        public CRUDService(CRUDRepository<TEntity> repository)
+        private readonly ILogger<CRUDService<TEntity>> _logger;
+        public CRUDService(ILogger<CRUDService<TEntity>> logger, CRUDRepository<TEntity> repository)
         {
-            if (!Directory.Exists(logsDirectory))
-            {
-                Directory.CreateDirectory(logsDirectory);
-            }
+            _logger = logger;
             _repository = repository;
         }
 
@@ -27,14 +24,7 @@ namespace IHubWebApplication.BLL
             }
             catch (Exception ex)
             {
-                if (!Directory.Exists(logsDirectory))
-                {
-                    Directory.CreateDirectory(logsDirectory);
-                }
-                using (StreamWriter writer = new StreamWriter(logFilePath, true))
-                {
-                    writer.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - This is a log message: " + ex.Message);
-                }
+                _logger.LogError(ex.Message);
                 return null;
             }
         }

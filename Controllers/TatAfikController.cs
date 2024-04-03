@@ -5,7 +5,7 @@ namespace IHubWebApplication.Controllers
 {
     public class TatAfikController : CRUDController<HgdrTatAfik>
     {
-        public TatAfikController(CRUDService<HgdrTatAfik> service) : base(service)
+        public TatAfikController(CRUDService<HgdrTatAfik> service, ILogger<CRUDController<HgdrTatAfik>> logger) : base(service, logger)
         {
         }
     }

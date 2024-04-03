@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class SugCheshbonController : CRUDController<HgdrSugCheshbon>
     {
-        public SugCheshbonController(CRUDService<HgdrSugCheshbon> service) : base(service)
+        public SugCheshbonController(CRUDService<HgdrSugCheshbon> service, ILogger<CRUDController<HgdrSugCheshbon>> logger) : base(service, logger)
         {
         }
     }

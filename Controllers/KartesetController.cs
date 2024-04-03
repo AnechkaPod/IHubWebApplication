@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class KartesetController : CRUDController<HgdrKarteset>
     {
-        public KartesetController(CRUDService<HgdrKarteset> service) : base(service)
+        public KartesetController(CRUDService<HgdrKarteset> service, ILogger<CRUDController<HgdrKarteset>> logger) : base(service, logger)
         {
         }
     }

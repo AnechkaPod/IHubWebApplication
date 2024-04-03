@@ -3,6 +3,7 @@ using IHubWebApplication.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using static System.Net.WebRequestMethods;
@@ -13,6 +14,7 @@ namespace IHubWebApplication.Controllers
     [ApiController]
     public class HeshbonController : ControllerBase
     {
+        private readonly ILogger<HeshbonController> _logger;
         private readonly HeshbonService _service;
 
         private readonly IConfiguration _configuration;
@@ -37,6 +39,7 @@ namespace IHubWebApplication.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 // Handle exceptions if needed
                 return BadRequest("An error occurred: " + ex.Message);
             }
@@ -59,6 +62,7 @@ namespace IHubWebApplication.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 // Handle exceptions if needed
                 return BadRequest("An error occurred: " + ex.Message);
             }

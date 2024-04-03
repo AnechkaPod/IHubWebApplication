@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class NechesController : CRUDController<HgdrNech>
     {
-        public NechesController(CRUDService<HgdrNech> service) : base(service)
+        public NechesController(CRUDService<HgdrNech> service, ILogger<CRUDController<HgdrNech>> logger) : base(service, logger)
         {
         }
     }

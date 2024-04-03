@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class MachshirController : CRUDController<HgdrMachshir>
     {
-        public MachshirController(CRUDService<HgdrMachshir> service) : base(service)
+        public MachshirController(CRUDService<HgdrMachshir> service, ILogger<CRUDController<HgdrMachshir>> logger) : base(service, logger)
         {
         }
     }

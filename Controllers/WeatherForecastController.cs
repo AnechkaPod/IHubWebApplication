@@ -8,6 +8,8 @@ using System.Security.Principal;
 
 namespace IHubWebApplication.Controllers
 {
+ 
+
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -27,6 +29,7 @@ namespace IHubWebApplication.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public Models.Response GetAll()
         {
+            _logger.LogInformation("This is an informational message.");
             var principal = HttpContext.User;
             _logger.LogInformation("Principal: {0}", principal.Identity.Name);
             var windowsIdentity = principal?.Identity as WindowsIdentity;

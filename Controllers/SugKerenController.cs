@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class SugKerenController : CRUDController<HgdrSugKerenMutzar>
     {
-        public SugKerenController(CRUDService<HgdrSugKerenMutzar> service) : base(service)
+        public SugKerenController(CRUDService<HgdrSugKerenMutzar> service, ILogger<CRUDController<HgdrSugKerenMutzar>> logger) : base(service, logger)
         {
         }
     }

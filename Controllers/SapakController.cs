@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class SapakController : CRUDController<HgdrSapak>
     {
-        public SapakController(CRUDService<HgdrSapak> service) : base(service)
+        public SapakController(CRUDService<HgdrSapak> service, ILogger<CRUDController<HgdrSapak>> logger) : base(service, logger)
         {
         }
     }

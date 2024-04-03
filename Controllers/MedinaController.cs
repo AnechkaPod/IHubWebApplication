@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class MedinaController : CRUDController<HgdrMedina>
     {
-        public MedinaController(CRUDService<HgdrMedina> service) : base(service)
+        public MedinaController(CRUDService<HgdrMedina> service, ILogger<CRUDController<HgdrMedina>> logger) : base(service, logger)
         {
         }
     }

@@ -1,4 +1,5 @@
 ﻿
+using IHubWebApplication.Controllers;
 using IHubWebApplication.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ namespace IHubWebApplication.DAL
     {
         private readonly InvestHubContext _dbContext;
         private readonly DbSet<HgdrMutzar> _dbSet;
+        private readonly ILogger<MutzarRepository> _logger;
         public MutzarRepository(InvestHubContext dbContext)
         {
             _dbContext = dbContext;
@@ -78,6 +80,7 @@ namespace IHubWebApplication.DAL
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return false;
             }
         }

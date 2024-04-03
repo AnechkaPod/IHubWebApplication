@@ -1,4 +1,5 @@
 ﻿
+using IHubWebApplication.Controllers;
 using IHubWebApplication.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,8 @@ namespace IHubWebApplication.DAL
     {
         private readonly InvestHubContext _dbContext;
         private readonly DbSet<HgdrCheshbon> _dbSet;
+        private readonly ILogger<HeshbonRepository> _logger;
+
         public HeshbonRepository(InvestHubContext dbContext)
         {
             _dbContext = dbContext;
@@ -81,6 +84,7 @@ namespace IHubWebApplication.DAL
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return false;
             }
         }

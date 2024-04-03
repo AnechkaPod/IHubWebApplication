@@ -11,8 +11,9 @@ namespace IHubWebApplication.Controllers
 {
     public class MetafelController : CRUDController<HgdrMetafel>
     {
-        public MetafelController(CRUDService<HgdrMetafel> service) : base(service)
+        public MetafelController(CRUDService<HgdrMetafel> service, ILogger<CRUDController<HgdrMetafel>> logger) : base(service, logger)
         {
+            
         }
     }
 }

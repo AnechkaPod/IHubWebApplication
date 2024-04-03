@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class BankController : CRUDController<HgdrBank>
     {
-        public BankController(CRUDService<HgdrBank> service) : base(service)
+        public BankController(CRUDService<HgdrBank> service, ILogger<CRUDController<HgdrBank>> logger) : base(service, logger)
         {
         }
     }

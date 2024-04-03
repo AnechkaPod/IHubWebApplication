@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class TnuaController : CRUDController<HgdrTnuot>
     {
-        public TnuaController(CRUDService<HgdrTnuot> service) : base(service)
+        public TnuaController(CRUDService<HgdrTnuot> service, ILogger<CRUDController<HgdrTnuot>> logger) : base(service, logger)
         {
         }
     }

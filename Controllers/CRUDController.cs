@@ -14,20 +14,14 @@ namespace IHubWebApplication.Controllers
     public abstract class CRUDController<TEntity> : ControllerBase where TEntity : class
     {
         protected readonly CRUDService<TEntity> _service;
-        string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", $"log-{DateTime.Now:yyyy-MM-dd}.txt");
-        string logsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
+        private readonly ILogger<CRUDController<TEntity>> _logger;
 
         private readonly IConfiguration _configuration;
-        public CRUDController(CRUDService<TEntity> service)
+        public CRUDController(CRUDService<TEntity> service, ILogger<CRUDController<TEntity>> logger)
         {
+            _logger = logger;
             _service = service;
-            if (!Directory.Exists(logsDirectory))
-            {
-                Directory.CreateDirectory(logsDirectory);
-            }
         }
-
-
 
 
         [HttpGet]
@@ -35,22 +29,10 @@ namespace IHubWebApplication.Controllers
         [EnableCors("AllowSpecificOrigin")]
         public ActionResult GetAll()
         {
-
+            _logger.LogInformation("GetAll command");
             string username1 = HttpContext.User.Identity.Name;
             List<TEntity> list = null;
-            using (StreamWriter writer = new StreamWriter(logFilePath, true))
-            {
-                writer.WriteLine($"in CRUDController before get all");
-            }
-
             list = _service.GetAll();
-
-            using (StreamWriter writer = new StreamWriter(logFilePath, true))
-            {
-                writer.WriteLine($"in CRUDController after get all");
-                if (list != null)
-                    writer.WriteLine($"in CRUDController list" + list.ToList()); ;
-            }
             return Ok(list);
         }
 
@@ -58,6 +40,7 @@ namespace IHubWebApplication.Controllers
         [Route("{id}")]
         public ActionResult Update(int id, [FromBody] TEntity ent)
         {
+            _logger.LogInformation("Update command");
             _service.Update(ent);
             return NoContent();
         }
@@ -66,6 +49,7 @@ namespace IHubWebApplication.Controllers
         //[Route("AddMatbea")]
         public ActionResult Add([FromBody] TEntity ent)
         {
+            _logger.LogInformation("Add command");
             _service.Add(ent);
             return Ok(ent);
         }
@@ -74,6 +58,7 @@ namespace IHubWebApplication.Controllers
         [Route("{id}")]
         public ActionResult Delete(int id)
         {
+            _logger.LogInformation("Delete command");
             _service.Delete<int>(id);
             return NoContent();
         }

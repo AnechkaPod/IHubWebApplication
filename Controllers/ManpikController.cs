@@ -11,7 +11,7 @@ namespace IHubWebApplication.Controllers
 {
     public class ManpikController : CRUDController<HgdrManpik>
     {
-        public ManpikController(CRUDService<HgdrManpik> service) : base(service)
+        public ManpikController(CRUDService<HgdrManpik> service, ILogger<CRUDController<HgdrManpik>> logger) : base(service, logger)
         {
         }
     }

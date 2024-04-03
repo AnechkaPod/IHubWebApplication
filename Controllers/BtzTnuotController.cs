@@ -1,5 +1,5 @@
 ﻿using IHubWebApplication.BLL;
-using IHubWebApplication.Model;
+using IHubWebApplication.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +9,9 @@ using static System.Net.WebRequestMethods;
 
 namespace IHubWebApplication.Controllers
 {
-    public class BtzTnuotController : CRUDController<BtzTnuot>
+    public class BtzTnuotController : CRUDController<BtzTnout>
     {
-        public BtzTnuotController(CRUDService<BtzTnuot> service) : base(service)
+        public BtzTnuotController(CRUDService<BtzTnout> service, ILogger<CRUDController<BtzTnout>> logger) : base(service, logger)
         {
         }
     }

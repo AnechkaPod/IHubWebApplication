@@ -9,8 +9,11 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using Microsoft.AspNetCore.Server.IISIntegration;
 /*
 !!!DO NOT DELETE THIS LINE!!!
 //run clean
@@ -72,6 +75,14 @@ using (StreamWriter writer = new StreamWriter(logFilePath, true))
 
 builder.Services.AddCors(options =>
 {
+    //options.AddPolicy("CorsPolicy",
+    //builder =>
+    //{
+    //    builder.WithOrigins(allowedOrigin)
+    //           .AllowAnyHeader()
+    //           .AllowAnyMethod()
+    //           .AllowCredentials(); // Allow credentials (cookies, authorization headers, etc.)
+    //});
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
@@ -93,8 +104,14 @@ builder.Services.AddScoped(typeof(HeshbonRepository));
 builder.Services.AddScoped(typeof(MutzarService));
 builder.Services.AddScoped(typeof(MutzarRepository));
 
-
+builder.Services.AddAuthentication(IISDefaults.AuthenticationScheme);
 builder.Services.AddAuthorization();
+
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders(); // Remove other logging providers
+    logging.AddNLog(); // UseNLog() for configuring NLog
+});
 var app = builder.Build();
 
 // Configure CORS before other middleware
@@ -110,7 +127,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
